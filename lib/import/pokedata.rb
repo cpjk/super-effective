@@ -3,44 +3,59 @@ require 'csv'
 module Import
   class Pokedata
 
-    def initialize path
-      path = "/#{path}" if path[0] != '/'
-      @path = Rails.root.to_s + path
+    def initialize
     end
 
-    def import!
+    def import
       import_pokemon
       import_types
-      import_type_effectiveness
+      import_pokemon_types
+      import_type_efficacies
     end
 
-    def import_pokemon
-      path = @path + '/pokemon.csv'
-      CSV.foreach(path, headers: true) do |row|
-        binding.pry
-        pokemon = Pokemon.new
-        pokemon.update pokedex_id: row["species_id"], name: row["identifier"]
+    def import_pokemon options = { path: 'data/csv/pokemon.csv' }
+      CSV.foreach(Rails.root + options[:path], headers: true) do |row|
+        ActiveRecord::Base.transaction do
+          unless row['identifier'].nil?
+            Pokemon.create(pokedex_id: row["species_id"], name: row["identifier"])
+          end
+        end
       end
-      # import pokemon
-      # import pokemon types
     end
 
-    def import_types
-      path =@path + '/types.csv'
-      CSV.foreach(path, headers: true) do |row|
-        type = Type.new
-        type.update name: row['identifier'], pokedex_type_id: row["id"]
+    def import_types options = { path: 'data/csv/types.csv' }
+      CSV.foreach(Rails.root + options[:path], headers: true) do |row|
+        ActiveRecord::Base.transaction do
+          unless row['identifier'].nil?
+            Type.create(name: row['identifier'], pokedex_type_id: row['id'])
+          end
+        end
       end
-      # import types
-      # import type_efficacy
     end
 
-    def import_pokemon_types
+    def import_pokemon_types options = { path: 'data/csv/pokemon_types.csv' }
+      CSV.foreach(Rails.root + options[:path], headers: true) do |row|
+        ActiveRecord::Base.transaction do
+          unless row['pokemon_id'].nil?
+            type = Type.find_by pokedex_type_id: row['type_id']
+            pokemon = Pokemon.find_by pokedex_id: row['pokemon_id']
+            pokemon.types << type unless pokemon.types.include? type
+          end
+        end
+      end
     end
 
-    def import_type_eff
-      CSV.foreach(path, headers: true) do |row|
-        #todo
+    def import_type_efficacies options = { path: 'data/csv/type_efficacy.csv' }
+      CSV.foreach(Rails.root + options[:path], headers: true) do |row|
+        ActiveRecord::Base.transaction do
+          unless row['damage_type_id'].nil?
+            target_type_id = row['target_type_id']
+            damage_type_id = row['damage_type_id']
+            type_efficacy = TypeEfficacy.create damage_factor: row['damage_factor']
+            Type.find_by(pokedex_type_id: target_type_id).target_type_efficacies << type_efficacy
+            Type.find_by(pokedex_type_id: damage_type_id).damage_type_efficacies << type_efficacy
+          end
+        end
       end
     end
   end
