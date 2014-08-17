@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140816200551) do
+ActiveRecord::Schema.define(version: 20140817035955) do
 
   create_table "pokemon", force: true do |t|
     t.string  "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140816200551) do
   create_table "type_efficacies", force: true do |t|
     t.integer "target_type_id"
     t.integer "damage_type_id"
+    t.integer "damage_factor"
   end
 
   create_table "types", force: true do |t|
