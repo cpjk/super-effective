@@ -1,0 +1,19 @@
+<%= form_tag add_pokemon_path, method: :post do %>
+  <%= label_tag :add_pokemon, "Add a pokemon to my team" %>
+  <%= text_field_tag :add_pokemon %>
+  <%= submit_tag "Enter" %>
+<% end %>
+
+<table>
+  <% @team.each do |member| %>
+    <tr>
+      <td><%= member %></td>
+      <td>
+        <%= form_tag delete_pokemon_path, method: :delete, pokemon: member do %>
+          <%= hidden_field_tag :pokemon, member %>
+          <%= submit_tag "Delete" %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
