@@ -5,12 +5,15 @@
 <% end %>
 
 <table>
+  <% unless @team.any? %>
+    You have not yet added any pokemon to your team!
+  <% end %>
   <% @team.each do |member| %>
     <tr>
-      <td><%= member %></td>
+      <td><%= member.name %></td>
       <td>
-        <%= form_tag delete_pokemon_path, method: :delete, pokemon: member do %>
-          <%= hidden_field_tag :pokemon, member %>
+        <%= form_tag delete_pokemon_path, method: :delete, pokemon: member.name do %>
+          <%= hidden_field_tag :pokemon, member.name %>
           <%= submit_tag "Delete" %>
         <% end %>
       </td>
