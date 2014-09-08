@@ -5,3 +5,4 @@
 /coverage
 /spec/tmp
 /.bundle
+/.ruby-version
