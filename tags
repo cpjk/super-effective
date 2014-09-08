@@ -1,7 +1,0 @@
-!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
-!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-Application	./config/application.rb	/^  class Application < Rails::Application$/;"	c	class:Supereffective	inherits:Rails.Application
-ApplicationController	./app/controllers/application_controller.rb	/^class ApplicationController < ActionController::Base$/;"	c	inherits:ActionController.Base
-ApplicationHelper	./app/helpers/application_helper.rb	/^module ApplicationHelper$/;"	m
-Supereffective	./config/application.rb	/^module Supereffective$/;"	m
-TestCase	./test/test_helper.rb	/^class ActiveSupport::TestCase$/;"	c	class:ActiveSupport
