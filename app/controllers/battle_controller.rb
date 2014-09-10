@@ -16,7 +16,7 @@ class BattleController < ApplicationController
       end
     end
     update_team
-    render 'battle'
+    redirect_to :battle
   end
 
   def delete_pokemon
@@ -24,7 +24,7 @@ class BattleController < ApplicationController
     session[:team].slice! session[:team].index(params[:pokemon])
 
     update_team
-    render 'battle'
+    redirect_to :battle
   end
 
   private
