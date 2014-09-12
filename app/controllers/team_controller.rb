@@ -1,7 +1,7 @@
-class BattleController < ApplicationController
-  before_filter :update_team, only: :battle
+class TeamController < ApplicationController
+  before_filter :update_team, only: :team
 
-  def battle
+  def team
   end
 
   def add_pokemon
@@ -16,7 +16,7 @@ class BattleController < ApplicationController
       end
     end
     update_team
-    redirect_to :battle
+    redirect_to :team
   end
 
   def delete_pokemon
@@ -24,7 +24,7 @@ class BattleController < ApplicationController
     session[:team].slice! session[:team].index(params[:pokemon])
 
     update_team
-    redirect_to :battle
+    redirect_to :team
   end
 
   private
@@ -32,19 +32,5 @@ class BattleController < ApplicationController
   def update_team
     session[:team] ||= []
     @team = session[:team].map { |name| Pokemon.find_by name: name }
-  end
-
-  def best_pokemon enemy_name
-    enemy = Pokemon.find_by name: enemy_name
-    first_enemy_type = enemy.types.first
-    second_enemy_type = enemy.types.second
-
-    @team.sort_by do |member|
-      first_member_type = member.types.first
-      second_member_type = member.types.second
-
-      [first_member_type.damage_factor_as_damager_vs(first_enemy_type),
-       -first_enemy_type.damage_factor_as_damager_vs(first_member_type)]
-    end
   end
 end

@@ -1,0 +1,32 @@
+<% if flash[:error] %>
+  <%= content_tag :div, class: 'header-bar centre-block' do %>
+    <%= flash[:error] %>
+  <% end %>
+<% end %>
+
+<%= content_tag :div, class: 'container centre-block' do %>
+  <%= content_tag :div, class: 'add-pokemon-form' do %>
+    <%= form_tag add_pokemon_path, method: :post, class: 'add-pokemon-form' do %>
+      <%= label_tag :add_pokemon, "Add a pokemon to my team" %>
+      <%= text_field_tag :add_pokemon, nil, required: true %>
+      <%= submit_tag "Enter" %>
+    <% end %>
+  <% end %>
+
+  <table class="team-table">
+    <% unless @team.any? %>
+      You have not yet added any pokemon to your team!
+    <% end %>
+    <% @team.each do |member| %>
+      <tr>
+        <td><%= member.name.capitalize %></td>
+        <td>
+          <%= form_tag delete_pokemon_path, method: :delete, pokemon: member.name do %>
+            <%= hidden_field_tag :pokemon, member.name %>
+            <%= submit_tag "Delete" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
