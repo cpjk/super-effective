@@ -7,6 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="nav">
+    <%= link_to("Team", :add_pokemon) %>
+  </div>
+<% if flash[:error] %>
+  <%= content_tag :div, class: 'header-bar centre-block' do %>
+    <%= flash[:error] %>
+  <% end %>
+<% end %>
+
 <%= yield %>
 
 </body>

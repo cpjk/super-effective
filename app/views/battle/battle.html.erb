@@ -1,13 +1,6 @@
 <%= content_tag :div, class: 'container centre-block' do %>
-  <%= content_tag :div, class: 'add-pokemon-form' do %>
-    <%= form_tag add_pokemon_path, method: :post, class: 'add-pokemon-form' do %>
-      <%= label_tag :add_pokemon, "Add a pokemon to my team" %>
-      <%= text_field_tag :add_pokemon, nil, required: true %>
-      <%= submit_tag "Enter" %>
-    <% end %>
-  <% end %>
-
   <table class="team-table">
+    Your team:
     <% unless @team.any? %>
       You have not yet added any pokemon to your team!
     <% end %>
@@ -23,4 +16,16 @@
       </tr>
     <% end %>
   </table>
+
+  <%= content_tag :div, class: 'add-enemy-form' do %>
+    <%= form_tag find_best_pokemon_path, method: :post, class: 'add-enemy-form' do %>
+      <%= label_tag :enemy, "Enter the enemy you are facing!" %>
+      <%= text_field_tag :enemy, nil, required: true %>
+      <%= submit_tag "Enter" %>
+    <% end %>
+  <% end %>
+
+  <% if @best_pokemon %>
+    <%= "#{@best_pokemon.name.capitalize}! I choose you!" %>
+  <% end %>
 <% end %>
