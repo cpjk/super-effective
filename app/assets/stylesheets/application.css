@@ -30,7 +30,7 @@ body {
   margin-top: 5px;
   height: 400px;
   width: 400px;
-  background-color: grey;
+  background-image: url('triangular.png');
 }
 
 .centre-block {
@@ -40,4 +40,8 @@ body {
 
 .team-table {
   margin-left: 20px;
+}
+
+.nav {
+  background-image: url('triangular.png');
 }

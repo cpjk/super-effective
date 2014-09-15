@@ -22,13 +22,15 @@ class BattleController < ApplicationController
   def best_pokemon team, enemy
     first_enemy_type = enemy.types.first
     second_enemy_type = enemy.types.second
+    binding.pry
 
     @team.sort_by do |member|
       first_member_type = member.types.first
       second_member_type = member.types.second
 
-      [first_member_type.damage_factor_as_damager_vs(first_enemy_type),
-       -first_enemy_type.damage_factor_as_damager_vs(first_member_type)]
+      [-first_member_type.damage_factor_as_damager_vs(first_enemy_type),
+       first_enemy_type.damage_factor_as_damager_vs(first_member_type)]
+      binding.pry
     end.first
   end
 end

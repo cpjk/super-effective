@@ -24,7 +24,7 @@ class TeamController < ApplicationController
     session[:team].slice! session[:team].index(params[:pokemon])
 
     update_team
-    redirect_to :team
+    redirect_to :back
   end
 
   private

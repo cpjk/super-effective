@@ -9,6 +9,7 @@
 <body>
   <div class="nav">
     <%= link_to("Team", :add_pokemon) %>
+    <%= link_to("Battle", :battle) %>
   </div>
 <% if flash[:error] %>
   <%= content_tag :div, class: 'header-bar centre-block' do %>
